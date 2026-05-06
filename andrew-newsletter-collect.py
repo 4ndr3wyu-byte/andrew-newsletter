@@ -6,7 +6,7 @@ import requests
 import feedparser
 from datetime import datetime
 
-NEWSLETTER_GEMINI_KEY: ${{ secrets.NEWSLETTER_GEMINI_KEY }}
+GEMINI_KEY = os.environ['NEWSLETTER_GEMINI_KEY']
 
 
 SOURCES = {

@@ -1,10 +1,18 @@
 {
-  "generated_at": "2026-05-06T01:03:18.973064",
+  "generated_at": "2026-05-06T03:24:48.181649",
   "date": "2026년 05월 06일",
   "total": 45,
   "articles": [
     {
       "id": "bloomberg_0",
+      "source": "Bloomberg",
+      "title": "Iowa Returns to its Battleground Status for the Midterm Elections - Bloomberg.com",
+      "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQOVh4RG9vOWUxdlFtTUVSQW1vOGlTRE00aWpnZ1NVclFmekZndC1nSVJrV1VXUzRKYjFlVnJ5cVVlaDQtT3dxMndKdGJNUzFMaVhSVmNWdDZnVGpCdHhBRUVHWnZ1UkZpUjJJRFRRTjk5WEtPSUFLRnV3Y1RRQ29NMldXTTctUFQ2RWVvRUJsMkZtbWhBTzNBUE41VTFyc3c1WXFHVWwxZHNXMndqdC03VlBuYVp0dTN4SWtF?oc=5",
+      "description": "Iowa Returns to its Battleground Status for the Midterm Elections&nbsp;&nbsp;Bloomberg.com",
+      "summary_ko": "요약을 생성할 수 없습니다."
+    },
+    {
+      "id": "bloomberg_1",
       "source": "Bloomberg",
       "title": "Vijay’s Tamil Nadu Win May Benefit Chandrababu Naidu’s Andhra Pradesh - Bloomberg.com",
       "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQckRob3YyeVUxM3k1NDBVaXNsVEQ4OW5XY3BuZjF5bjRPcFFHUDNfMW1CMmg4MzB5VHpCdHV1TDRXVHJsa1J3ZktmUHBIMkRvQTc1NThyM3R5LWhrXzhrTzl6bTVfY2M2Nndod2FjcGszYTJzZXh4OXF0dEpYVDU2bEF6N3JpYUc5RmlzM0NPanJEYmlNMDRZYzQ4SnFjM0lWYWRKRnZaVjNLNUZXOGhLR1dSM1ZIRGRyZHhNMVFBX00?oc=5",
@@ -12,15 +20,15 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "bloomberg_1",
+      "id": "bloomberg_2",
       "source": "Bloomberg",
-      "title": "Kentucky Republicans Flashing Warning Signs for GOP Candidates - Bloomberg.com",
-      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOMUFJQnEzWVRKX0JQblo4Nkp6OE5fRUs1SlQ3R2RnUVFqOXAwT2kzZ3pyamdYOVpPN1BqQWdvc21raG9ETEE1WVRLQ0lFdVQ5cV9Ha2lGM25Qa2dfSFhGNDFnQzQ3ejhOcWhBb2ZRM1Z4WHY5UmxLUlY4VU83c2dZdW9rZ2o5WmVRQ1BZTFNzOExxMnd6UHVsQlFxVUUwRlhzanFlZmxldjNaWV9FU2NBcjNnVmRuOEE?oc=5",
-      "description": "Kentucky Republicans Flashing Warning Signs for GOP Candidates&nbsp;&nbsp;Bloomberg.com",
+      "title": "Iran Draws a Line and Puts Markets on Notice - Bloomberg.com",
+      "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPQ3RCOC15ckdtMHVMamFtT1ZJVDBaS0VXd3ZwYjE2bnZ1R2hFQmxnRThramUzQmlUNDFXaHp6NzJfdkwteWxWMjlKVGwwWWJsX0NDZUpaT3RFc1NxZ0xZcWZROFlNTG9UYmFueWhDTlpzVU9Md3E4SVZSNXZ2dVFRbDNMSHJjeDQ2ZlNkUnFVa3FsLXVuUHZ0SnRLRUVJMTFWV2ZJ?oc=5",
+      "description": "Iran Draws a Line and Puts Markets on Notice&nbsp;&nbsp;Bloomberg.com",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "bloomberg_2",
+      "id": "bloomberg_3",
       "source": "Bloomberg",
       "title": "How the Iran War Threatens Global Economic Growth - Bloomberg.com",
       "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNRjYyWC1zMnhfSWQzNWgyNEFWNU1vcnlIdVV5TzZ1ZTlpZERHc01acHFBaGlTc0FjVldrNjM0RkNyeG02d08tNGNKRXJGazlnbGlmLUJEVkx5NGJTTXJmR1BZWFUyQ2FCM21SQnlaTE80ZXk1bWl3WkU4SjlpTklNVzdIVm5fakplZTV0dW95c3cwN3BWMGhscVpyNVJpSHRuaUp6WHBR?oc=5",
@@ -28,19 +36,11 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "bloomberg_3",
-      "source": "Bloomberg",
-      "title": "China’s Rare Sanctions Pushback Leaves Banks Caught in Crossfire - Bloomberg.com",
-      "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNQXM1bFJhY21CZlE0dWJCczV4TGxLZ3lyRG1nSUFSa0dZOGNvZHNIOExGTlktSFAtVHNIczhNQ1JWaEZabGF6SWY5dmRNMmNFdHk5MnZBUU5yTWp1dG9nUEg1eUx6M2dBZzR4b0xpeGIwZW5kczRlOU1iU3ZvYkwxV2MzS2FiQ2tzSXIyRlg4VThsM3AxYjB3S25tZXpyZnpadWFXSjVHY2E1NzFISVN5ckFRTjZLSTlXemNVQXFWM0lGdw?oc=5",
-      "description": "China’s Rare Sanctions Pushback Leaves Banks Caught in Crossfire&nbsp;&nbsp;Bloomberg.com",
-      "summary_ko": "요약을 생성할 수 없습니다."
-    },
-    {
       "id": "bloomberg_4",
       "source": "Bloomberg",
-      "title": "Mexico’s Banks Handed Out Millions of Cards That Nobody Wants - Bloomberg.com",
-      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQQlVRUFFveDBHcXRWZjZvU1dpZkZpYng1TExxUXhlVmpQNkt6cGNKWnpWRFlhNjBjcWFIODFkcG5rYl9mY2RDXy1tRk0zVmx4ZDhmLUVOb2puU1Z1WjhEVC1GMDNhNnRIV05xV1pHalEybXZIcExmdmctOVRPbzBxZVlGY2E4ZnFBT2NHSWhXY3ZieVUwUUd0SFI2RmR0dmNWLUJnZ3AySFozZXBrdG5tejNXT0Q?oc=5",
-      "description": "Mexico’s Banks Handed Out Millions of Cards That Nobody Wants&nbsp;&nbsp;Bloomberg.com",
+      "title": "Kentucky Republicans Flashing Warning Signs for GOP Candidates - Bloomberg.com",
+      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOMUFJQnEzWVRKX0JQblo4Nkp6OE5fRUs1SlQ3R2RnUVFqOXAwT2kzZ3pyamdYOVpPN1BqQWdvc21raG9ETEE1WVRLQ0lFdVQ5cV9Ha2lGM25Qa2dfSFhGNDFnQzQ3ejhOcWhBb2ZRM1Z4WHY5UmxLUlY4VU83c2dZdW9rZ2o5WmVRQ1BZTFNzOExxMnd6UHVsQlFxVUUwRlhzanFlZmxldjNaWV9FU2NBcjNnVmRuOEE?oc=5",
+      "description": "Kentucky Republicans Flashing Warning Signs for GOP Candidates&nbsp;&nbsp;Bloomberg.com",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
@@ -126,45 +126,53 @@
     {
       "id": "techcrunch_0",
       "source": "TechCrunch",
-      "title": "Lucid Motors doesn’t know how many EVs it will build this year",
-      "link": "https://techcrunch.com/2026/05/05/lucid-motors-doesnt-know-how-many-evs-it-will-build-this-year/",
-      "description": "Lucid Motors pulled its guidance for the year, as it navigates swelling inventory and a company-wide cost-cutting measure.",
+      "title": "Nuro receives driverless testing permit ahead of Uber robotaxi service launch",
+      "link": "https://techcrunch.com/2026/05/05/nuro-receives-driverless-testing-permit-ahead-of-uber-robotaxi-service-launch/",
+      "description": "The Silicon Valley AV startup has not started driverless testing yet.",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
       "id": "techcrunch_1",
       "source": "TechCrunch",
-      "title": "As crypto cools, a16z crypto raises a $2.2B fund",
-      "link": "https://techcrunch.com/2026/05/05/as-crypto-cools-a16zcrypto-raises-a-2-2b-fund/",
-      "description": "As some of the biggest VCs in crypto start to consider funding AI startups, a16z crypto's new fund will stay the course.",
+      "title": "SAP bets $1.16B on 18-month-old German AI lab and says yes to NemoClaw",
+      "link": "https://techcrunch.com/2026/05/05/sap-bets-1-16b-on-18-month-old-german-ai-lab-and-says-yes-to-nemoclaw/",
+      "description": "SAP plans to buy German AI startup Prior Labs and invest heavily in it. It is also prohibiting customers' agents use to a select few like Nvidia's NemoClaw.",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
       "id": "techcrunch_2",
       "source": "TechCrunch",
-      "title": "Apple plans to make iOS 27 a Choose Your Own Adventure of AI models",
-      "link": "https://techcrunch.com/2026/05/05/apple-plans-to-make-ios-27-a-choose-your-own-adventure-of-ai-models/",
-      "description": "With Apple's latest operating system updates, users will reportedly have their pick of which third-party AI models they want to use for a host of tasks.",
+      "title": "Bumble’s paying users are slipping as it bets on an overhaul later this year",
+      "link": "https://techcrunch.com/2026/05/05/bumbles-paying-users-are-slipping-as-it-bets-on-an-overhaul-later-this-year/",
+      "description": "The company is making a big bet that the swiping model is outdated and most matches never turn into actual dates. The company wants to fix that by redesigning profiles, changing how people interact, and focusing a lot more on getting users to meet in real life.",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
       "id": "techcrunch_3",
       "source": "TechCrunch",
-      "title": "ASML CEO Christophe Fouquet on his company’s monopoly: no one is coming for us",
-      "link": "https://techcrunch.com/2026/05/05/asml-ceo-christophe-fouquet-no-one-is-coming-for-us/",
-      "description": "Christophe Fouquet, who became ASML's CEO in 2024 after more than a decade at the company, sat down with this editor on the rooftop deck of his Beverly Hills hotel Tuesday morning ahead of his appearance at the Milken Institute Global Conference. Dressed in a blue suit and white shirt, he was relaxed — even when the conversation turned to the rivals.",
+      "title": "Altara secures $7M to bridge the data gap that’s slowing down physical sciences",
+      "link": "https://techcrunch.com/2026/05/05/altara-secures-7m-to-bridge-the-data-gap-thats-slowing-down-physical-sciences/",
+      "description": "Altara’s AI aims to diagnose failures and help speed up R&#038;D by unifying  data siloed across spreadsheets and legacy systems.",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
       "id": "techcrunch_4",
       "source": "TechCrunch",
-      "title": "Volkswagen becomes Rivian’s top shareholder, displacing Amazon",
-      "link": "https://techcrunch.com/2026/05/05/volkswagen-becomes-rivians-top-shareholder-displacing-amazon/",
-      "description": "VW Group's stake will continue to grow under the $5.8 billion joint venture with Rivian.",
+      "title": "Lucid Motors doesn’t know how many EVs it will build this year",
+      "link": "https://techcrunch.com/2026/05/05/lucid-motors-doesnt-know-how-many-evs-it-will-build-this-year/",
+      "description": "Lucid Motors pulled its guidance for the year, as it navigates swelling inventory and a companywide cost-cutting measure.",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
       "id": "ars_technica_0",
+      "source": "Ars Technica",
+      "title": "OpenAI president forced to read his personal diary entries to jury",
+      "link": "https://arstechnica.com/tech-policy/2026/05/openai-president-explains-to-jury-why-his-diary-entries-sound-greedy/",
+      "description": "Elon Musk argued the journals show the moment when OpenAI abandoned its mission.",
+      "summary_ko": "요약을 생성할 수 없습니다."
+    },
+    {
+      "id": "ars_technica_1",
       "source": "Ars Technica",
       "title": "Silicon Valley bets $200M on AI data centers floating in the ocean",
       "link": "https://arstechnica.com/ai/2026/05/silicon-valley-bets-on-floating-ai-data-centers-powered-by-ocean-waves/",
@@ -172,7 +180,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "ars_technica_1",
+      "id": "ars_technica_2",
       "source": "Ars Technica",
       "title": "Character.AI sued over chatbot that claims to be a real doctor with a license",
       "link": "https://arstechnica.com/tech-policy/2026/05/character-ai-sued-over-chatbot-that-claims-to-be-a-real-doctor-with-a-license/",
@@ -180,7 +188,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "ars_technica_2",
+      "id": "ars_technica_3",
       "source": "Ars Technica",
       "title": "Widely used Daemon Tools disk app backdoored in monthlong supply-chain attack",
       "link": "https://arstechnica.com/security/2026/05/widely-used-daemon-tools-disk-app-backdoored-in-monthlong-supply-chain-attack/",
@@ -188,7 +196,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "ars_technica_3",
+      "id": "ars_technica_4",
       "source": "Ars Technica",
       "title": "RFK Jr. plans to curb antidepressants, which he falsely compares to heroin",
       "link": "https://arstechnica.com/health/2026/05/rfk-jr-plans-to-curb-antidepressants-which-he-falsely-compares-to-heroin/",
@@ -196,15 +204,23 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "ars_technica_4",
-      "source": "Ars Technica",
-      "title": "Google Home gets upgraded Gemini voice assistant and new camera controls",
-      "link": "https://arstechnica.com/gadgets/2026/05/google-home-gets-upgraded-gemini-voice-assistant-and-new-camera-controls/",
-      "description": "Google's smart home ecosystem is getting its biggest update since the AI-fueled 2025 revamp.",
+      "id": "electrek_0",
+      "source": "Electrek",
+      "title": "Rivian (RIVN) mulls making its own lidar as it builds full autonomous driving stack",
+      "link": "https://electrek.co/2026/05/05/rivian-rivn-mulls-in-house-lidar-autonomous-driving-stack/",
+      "description": "Rivian is considering manufacturing its own lidar sensors in the United States, potentially through a partnership with Chinese firms, as the EV maker aggressively vertically integrates its entire autonomous driving stack.\n\n\n\nThe move would add in-house lidar production to an autonomy strategy that already includes custom silicon chips and proprietary AI software — positioning Rivian as one of the most vertically integrated players in autonomous driving outside of Tesla and Waymo.\n\n\n\n more…",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "electrek_0",
+      "id": "electrek_1",
+      "source": "Electrek",
+      "title": "High-power EV charging hits one of the US’s busiest freight routes",
+      "link": "https://electrek.co/2026/05/05/high-power-ev-charging-us-busiest-freight-routes-greenlane/",
+      "description": "Greenlane is taking its heavy-duty EV truck charging network beyond California, and it’s heading straight into one of the busiest freight corridors in the US.\n\n\n\n more…",
+      "summary_ko": "요약을 생성할 수 없습니다."
+    },
+    {
+      "id": "electrek_2",
       "source": "Electrek",
       "title": "This EV charger system runs like a mini power plant – up to 10 MW",
       "link": "https://electrek.co/2026/05/05/ev-charger-system-runs-like-a-mini-power-plant-10-mw-abb/",
@@ -212,7 +228,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "electrek_1",
+      "id": "electrek_3",
       "source": "Electrek",
       "title": "Lucid (LCID) will adjust EV production after ending Q1 with bloated inventory",
       "link": "https://electrek.co/2026/05/05/lucid-lcid-adjust-ev-production-bloated-q1-inventory/",
@@ -220,27 +236,11 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "electrek_2",
+      "id": "electrek_4",
       "source": "Electrek",
       "title": "Volkswagen’s new electric SUV spotted undisguised ahead of its big debut [Video]",
       "link": "https://electrek.co/2026/05/05/volkswagens-affordable-electric-suv-spotted-undisguised-video/",
       "description": "Volkswagen is preparing to introduce a new entry-level electric SUV to sit below the ID.4. With its launch coming up, the ID. Cross was spotted testing undisguised.\n\n\n\n more…",
-      "summary_ko": "요약을 생성할 수 없습니다."
-    },
-    {
-      "id": "electrek_3",
-      "source": "Electrek",
-      "title": "WattEV orders 370 Tesla Semis in largest California EV truck deployment",
-      "link": "https://electrek.co/2026/05/05/wattev-orders-370-tesla-semis-california-largest-ev-truck-deployment/",
-      "description": "WattEV announced an order for 370 Tesla Semi Class 8 electric trucks, making it the largest single electric truck deployment in California. More than 300 of the trucks will be deployed under a joint program with the Port of Oakland.\n\n\n\nThe order comes just days after the first Tesla Semi rolled off the high-volume production line at the new dedicated factory adjacent to Gigafactory Nevada, marking a significant early win for Tesla’s commercial truck ambitions.\n\n\n\n more…",
-      "summary_ko": "요약을 생성할 수 없습니다."
-    },
-    {
-      "id": "electrek_4",
-      "source": "Electrek",
-      "title": "Subaru’s new EVs are now cheaper to lease than its gas and hybrid SUVs",
-      "link": "https://electrek.co/2026/05/05/subarus-evs-cheaper-to-lease-than-gas-and-hybrid-suvs/",
-      "description": "Subaru now offers three electric SUVs with the 2026 Solterra, Trailseeker, and Uncharted. After introducing new deals this month, including 0% APR and a $2,000 customer cash bonus, Subaru’s EVs are now cheaper to lease than its gas-powered and hybrid SUVs.\n\n\n\n more…",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
@@ -286,13 +286,21 @@
     {
       "id": "macrumors_0",
       "source": "MacRumors",
+      "title": "ChatGPT Is Smarter, More Accurate, and Less Obsessed With Emojis After Upgrade",
+      "link": "https://www.macrumors.com/2026/05/05/openai-gpt-instant-5-5-chatgpt-upgrade/",
+      "description": "ChatGPT's default model has been updated to GPT-5.5 Instant, a model that brings accuracy improvements with fewer hallucinations, especially in areas like medicine, law, and finance, according to OpenAI.\n\n\n\n\n\nGPT-5.5 Instant is more capable at tasks like analyzing images, answering STEM questions, and choosing when to use web search to provide a better answer. Responses can also be personalized because GPT-5.5 Instant can better draw context from past chats, files, and Gmail, but this is currently limited to paid subscribers.\n\n\n\nOpenAI says that responses are \"tighter and more to-the-point wit",
+      "summary_ko": "요약을 생성할 수 없습니다."
+    },
+    {
+      "id": "macrumors_1",
+      "source": "MacRumors",
       "title": "iOS 27 Will Let You Pick Claude or Gemini Instead of ChatGPT for Apple Intelligence",
       "link": "https://www.macrumors.com/2026/05/05/ios-27-third-party-chatbots-apple-intelligence/",
       "description": "iOS 27, iPadOS 27, and macOS 27 will let users set third-party AI services as the default for Apple Intelligence features like Writing Tools and Image Playground, reports Bloomberg.\n\n\n\n\n\nApple has signed a deal with Google and plans to use a Gemini-based model for &zwnj;Apple Intelligence&zwnj; and Siri features in &zwnj;iOS 27&zwnj;, but users will also be able to choose their favorite AI service as an alternative.\n\n\n\nApple has already partnered with OpenAI to make ChatGPT available in lieu of Apple's built-in options for &zwnj;Siri&zwnj;, Writing Tools, and &zwnj;Image Playground&zwnj; on iO",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "macrumors_1",
+      "id": "macrumors_2",
       "source": "MacRumors",
       "title": "Apple to Pay $250 Million to Settle Class Action Over Delayed Siri Features",
       "link": "https://www.macrumors.com/2026/05/05/apple-class-action-siri-lawsuit-settlement/",
@@ -300,7 +308,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "macrumors_2",
+      "id": "macrumors_3",
       "source": "MacRumors",
       "title": "Apple Cuts More Mac Studio and Mac Mini RAM Options as Memory Shortage Worsens",
       "link": "https://www.macrumors.com/2026/05/05/apple-mac-studio-mac-mini-ram-cuts/",
@@ -308,7 +316,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "macrumors_3",
+      "id": "macrumors_4",
       "source": "MacRumors",
       "title": "Apple Releases New Firmware for AirPods Max 2",
       "link": "https://www.macrumors.com/2026/05/05/airpods-max-2-firmware-8e258/",
@@ -316,15 +324,15 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "macrumors_4",
-      "source": "MacRumors",
-      "title": "iPhone Air MagSafe Battery Hits $59.99 Low Price",
-      "link": "https://www.macrumors.com/2026/05/05/iphone-air-magsafe-battery-low-price/",
-      "description": "Following a few steep discounts on the iPhone Air last month, we're now tracking a new all-time low price on the iPhone Air MagSafe Battery on Amazon. You can get the accessory for &#36;59.99, down from &#36;99.00, beating the previous low price by about &#36;20.\n\n\n\nNote: MacRumors is an affiliate partner with Amazon. When you click a link and make a purchase, we may receive a small payment, which helps us keep the site running.\n\n\n\nThe iPhone Air MagSafe Battery is only compatible with the iPhone Air, and it can add up to 65 percent additional charge to the smartphone. The MagSafe Battery supp",
+      "id": "9to5mac_0",
+      "source": "9to5Mac",
+      "title": "Intel’s stock jumped 13% today over Apple chip manufacturing report",
+      "link": "https://9to5mac.com/2026/05/05/intels-stock-jumped-13-today-over-apple-chip-manufacturing-report/",
+      "description": "Intel’s stock hit a record high today in the aftermath of a Bloomberg report that claimed Apple is exploring Intel and Samsung Electronics as potential manufacturing partners for future device chips. Here are the details.\n\n\n\n more…",
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "9to5mac_0",
+      "id": "9to5mac_1",
       "source": "9to5Mac",
       "title": "Apple pressed by Maryland lawmakers over closure of first unionized U.S. store",
       "link": "https://9to5mac.com/2026/05/05/apple-pressed-by-maryland-lawmakers-over-closure-of-first-unionized-u-s-store/",
@@ -332,7 +340,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "9to5mac_1",
+      "id": "9to5mac_2",
       "source": "9to5Mac",
       "title": "9to5Mac Daily: May 5, 2026 – iOS 26.5 RC, Apple chip partners",
       "link": "https://9to5mac.com/2026/05/05/daily-may-5-2026/",
@@ -340,7 +348,7 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "9to5mac_2",
+      "id": "9to5mac_3",
       "source": "9to5Mac",
       "title": "Threads starts rolling out DMs on the web, but there are a few catches",
       "link": "https://9to5mac.com/2026/05/05/threads-starts-rolling-out-dms-on-the-web-but-there-are-a-few-catches/",
@@ -348,19 +356,11 @@
       "summary_ko": "요약을 생성할 수 없습니다."
     },
     {
-      "id": "9to5mac_3",
+      "id": "9to5mac_4",
       "source": "9to5Mac",
       "title": "Apple Manufacturing Academy highlights AI adoption across U.S. industry",
       "link": "https://9to5mac.com/2026/05/05/apple-manufacturing-academy-highlights-ai-adoption-across-u-s-industry/",
       "description": "Apple and Michigan State University recently held the inaugural Spring Forum for the Apple Manufacturing Academy, focused on how AI is being implemented across multiple manufacturing workflows. Here are the details.\n\n\n\n more…",
-      "summary_ko": "요약을 생성할 수 없습니다."
-    },
-    {
-      "id": "9to5mac_4",
-      "source": "9to5Mac",
-      "title": "iPhone users could get up to $95 per device as Apple reaches $250M settlement over Siri delays",
-      "link": "https://9to5mac.com/2026/05/05/apple-reaches-250m-settlement-over-siri-delays-users-could-get-up-to-95-per-device/",
-      "description": "Last March, Apple was hit with a class action lawsuit after delaying the launch of the “more personalized Siri” that was first announced at WWDC 2024.\n\n\n\nApple agreed to settle the case in December, and the full settlement terms are now available.\n\n\n\nApple is set to pay $250 million to settle the lawsuit, equating to an estimated $25 per device. That number could reach up to $95 per device, depending on how many users submit claims.\n\n\n\n more…",
       "summary_ko": "요약을 생성할 수 없습니다."
     }
   ]

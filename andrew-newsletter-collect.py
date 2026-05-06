@@ -8,7 +8,6 @@ from datetime import datetime
 
 GEMINI_KEY = os.environ['NEWSLETTER_GEMINI_KEY']
 
-
 SOURCES = {
     'Reuters':         'https://feeds.reuters.com/reuters/topNews',
     'Bloomberg':       'https://news.google.com/rss/search?q=bloomberg+markets+economy&hl=en-US&gl=US&ceid=US:en',
@@ -64,11 +63,11 @@ def call_gemini(prompt):
         'contents': [{'parts': [{'text': prompt}]}],
         'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 2048}
     }
-    for attempt in range(3):
+    for attempt in range(4):
         try:
             resp = requests.post(url, json=body, timeout=30)
             if resp.status_code == 429:
-                wait = 30 * (attempt + 1)
+                wait = 65 * (attempt + 1)
                 print('  Rate limit -> wait ' + str(wait) + 's')
                 time.sleep(wait)
                 continue
@@ -123,7 +122,7 @@ def main():
     print('total: ' + str(len(articles)))
 
     print('generating summaries (batch mode)...')
-    BATCH_SIZE = 10
+    BATCH_SIZE = 5
     for batch_start in range(0, len(articles), BATCH_SIZE):
         batch = articles[batch_start:batch_start + BATCH_SIZE]
         batch_end = min(batch_start + BATCH_SIZE, len(articles))
@@ -133,7 +132,7 @@ def main():
         for i, article in enumerate(batch):
             article['summary_ko'] = summaries[i]
 
-        time.sleep(5)
+        time.sleep(70)
 
     data = {
         'generated_at': datetime.now().isoformat(),

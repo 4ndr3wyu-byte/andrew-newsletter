@@ -61,7 +61,7 @@ def call_gemini(prompt):
     )
     body = {
         'contents': [{'parts': [{'text': prompt}]}],
-        'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 300}
+        'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 2048}
     }
     for attempt in range(3):
         try:
@@ -78,19 +78,40 @@ def call_gemini(prompt):
             return None
     return None
 
-def generate_summary(article):
+def generate_batch_summaries(articles):
+    lines = ''
+    for i, a in enumerate(articles):
+        lines += (
+            'Article ' + str(i+1) + ':\n'
+            'Title: ' + a['title'] + '\n'
+            'Content: ' + a['description'] + '\n\n'
+        )
+
     prompt = (
-        '다음 영문 기사를 한국어 3줄로 요약해줘.\n\n'
+        '아래 기사들을 각각 한국어 3줄로 요약해줘.\n\n'
         '규칙:\n'
-        '- 정확히 3줄만 작성\n'
-        '- 각 줄은 핵심 내용 1가지\n'
+        '- 각 기사마다 정확히 3줄\n'
         '- 번호나 기호 없이 줄바꿈으로만 구분\n'
-        '- 자연스러운 한국어\n\n'
-        '제목: ' + article['title'] + '\n'
-        '내용: ' + article['description']
+        '- 자연스러운 한국어\n'
+        '- 기사 구분은 반드시 === 로 구분\n'
+        '- 출력 형식: 기사1 요약줄1\n요약줄2\n요약줄3\n===\n기사2 요약줄1\n...\n\n'
+        + lines
     )
+
     result = call_gemini(prompt)
-    return result if result else '요약을 생성할 수 없습니다.'
+    if not result:
+        return ['요약을 생성할 수 없습니다.' for _ in articles]
+
+    parts = result.split('===')
+    summaries = []
+    for i, part in enumerate(parts):
+        s = part.strip()
+        summaries.append(s if s else '요약을 생성할 수 없습니다.')
+
+    while len(summaries) < len(articles):
+        summaries.append('요약을 생성할 수 없습니다.')
+
+    return summaries[:len(articles)]
 
 def main():
     print('=' * 50)
@@ -100,11 +121,18 @@ def main():
     articles = fetch_articles()
     print('total: ' + str(len(articles)))
 
-    print('generating summaries...')
-    for i, article in enumerate(articles):
-        print('  [' + str(i+1) + '/' + str(len(articles)) + '] ' + article['title'][:50])
-        article['summary_ko'] = generate_summary(article)
-        time.sleep(2)
+    print('generating summaries (batch mode)...')
+    BATCH_SIZE = 10
+    for batch_start in range(0, len(articles), BATCH_SIZE):
+        batch = articles[batch_start:batch_start + BATCH_SIZE]
+        batch_end = min(batch_start + BATCH_SIZE, len(articles))
+        print('  batch [' + str(batch_start+1) + '-' + str(batch_end) + '/' + str(len(articles)) + ']')
+
+        summaries = generate_batch_summaries(batch)
+        for i, article in enumerate(batch):
+            article['summary_ko'] = summaries[i]
+
+        time.sleep(5)
 
     data = {
         'generated_at': datetime.now().isoformat(),

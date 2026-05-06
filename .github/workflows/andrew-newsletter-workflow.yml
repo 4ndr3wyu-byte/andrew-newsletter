@@ -29,7 +29,8 @@ jobs:
       # ── 4. 뉴스 수집 + Gemini 요약 생성 ────────────────
       - name: Collect news and generate summaries
         env:
-          NEWSLETTER_GEMINI_KEY: ${{ secrets.NEWSLETTER_GEMINI_KEY }}
+          NEWSLETTER_GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }}
+
         run: python andrew-newsletter-collect.py
 
       # ── 5. GitHub Pages 배포 준비 ───────────────────────

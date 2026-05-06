@@ -2,8 +2,8 @@ name: Daily Andrew Newsletter
 
 on:
   schedule:
-    - cron: '0 22 * * *'      # 한국시간 오전 7시 (UTC 22시)
-  workflow_dispatch:          # 수동 실행도 가능
+    - cron: '0 22 * * *'      # 한국시간 매일 오전 7시
+  workflow_dispatch:
 
 jobs:
   daily-newsletter:
@@ -18,12 +18,14 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 lxml
+
       - name: Run Crawler & Send Newsletter
         env:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          pip install requests beautifulsoup4 lxml
-          python news-crawler-naver-ai-tesla-apple.py
+        run: python news-crawler-naver-ai-tesla-apple.py

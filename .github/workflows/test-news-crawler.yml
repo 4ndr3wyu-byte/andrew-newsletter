@@ -1,13 +1,12 @@
-name: Test Naver News Crawler
+name: Daily Andrew Newsletter
 
 on:
-  push:
-    paths:
-      - 'news-crawler-naver-ai-tesla-apple.py'
-  workflow_dispatch:
+  schedule:
+    - cron: '0 22 * * *'      # 한국시간 오전 7시 (UTC 22시)
+  workflow_dispatch:          # 수동 실행도 가능
 
 jobs:
-  test-crawler:
+  daily-newsletter:
     runs-on: ubuntu-latest
     
     steps:
@@ -19,18 +18,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run Naver News Crawler
+      - name: Run Crawler & Send Newsletter
         env:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          pip install requests
+          pip install requests beautifulsoup4 lxml
           python news-crawler-naver-ai-tesla-apple.py
-
-      - name: Upload collected news
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: collected-news
-          path: "*.json"
-          retention-days: 7

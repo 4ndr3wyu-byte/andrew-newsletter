@@ -5,7 +5,7 @@ on:
     paths:
       - 'news-crawler-naver-ai-tesla-apple.py'
       - 'requirements.txt'
-  workflow_dispatch:   # 수동으로 실행 가능
+  workflow_dispatch:
 
 jobs:
   test-crawler:
@@ -22,22 +22,20 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: pip install requests
 
       - name: Run Naver News Crawler
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
         run: |
           python news-crawler-naver-ai-tesla-apple.py
-        env:
-          # 필요하면 나중에 API 키 등을 넣을 수 있음
-          PYTHONUNBUFFERED: 1
+        shell: bash
 
-      - name: Upload collected news as artifact
+      - name: Upload collected news
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: collected-news
-          path: |
-            *.json
-            output/
+          path: "*.json"
           retention-days: 7

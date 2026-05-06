@@ -1,117 +1,78 @@
 import requests
-from bs4 import BeautifulSoup
-import time
-import random
 import json
-from fake_useragent import UserAgent
+import time
+import urllib.parse
+from datetime import datetime
 
-ua = UserAgent()
+# ==================== 네이버 API 설정 ====================
+# GitHub Secrets에 등록한 값 사용 (강력 추천)
+CLIENT_ID = "YOUR_CLIENT_ID"          # ← GitHub Secrets에서 불러올 예정
+CLIENT_SECRET = "YOUR_CLIENT_SECRET"  # ← GitHub Secrets에서 불러올 예정
 
-def get_headers():
-    return {
-        "User-Agent": ua.random,
-        "Referer": "https://www.naver.com/",
-        "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Sec-Fetch-Site": "same-origin",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Dest": "document",
-        "Upgrade-Insecure-Requests": "1",
-    }
+HEADERS = {
+    "X-Naver-Client-Id": CLIENT_ID,
+    "X-Naver-Client-Secret": CLIENT_SECRET,
+}
 
-def search_naver_news(keyword, max_articles=5, max_retries=3):
+def search_naver_news_api(keyword, max_articles=5):
+    """네이버 공식 뉴스 검색 API 사용"""
     articles = []
-    page = 1
+    enc_text = urllib.parse.quote(keyword)
     
-    while len(articles) < max_articles and page <= 5:
-        url = f"https://search.naver.com/search.naver?where=news&query={keyword}&start={((page-1)*10)+1}"
-        
-        for attempt in range(max_retries):
-            try:
-                resp = requests.get(url, headers=get_headers(), timeout=15)
-                
-                if resp.status_code == 403:
-                    print(f"  403 차단됨 → {attempt+1}회 재시도")
-                    time.sleep(random.uniform(5, 8))
-                    continue
-                    
-                resp.raise_for_status()
-                soup = BeautifulSoup(resp.text, 'lxml')
-                
-                news_items = soup.select("div.news_wrap.api_ani_send")
-                
-                for item in news_items:
-                    if len(articles) >= max_articles:
-                        break
-                        
-                    title_tag = item.select_one("a.news_tit")
-                    if not title_tag:
-                        continue
-                        
-                    title = title_tag.get_text(strip=True)
-                    naver_link = title_tag['href']
-                    
-                    content = get_article_content(naver_link)
-                    
-                    articles.append({
-                        "keyword": keyword,
-                        "title": title,
-                        "naver_link": naver_link,
-                        "content": content[:3000] if content else "본문 추출 실패",
-                        "crawled_at": time.strftime("%Y-%m-%d %H:%M:%S")
-                    })
-                    
-                    print(f"✓ {keyword} | {title[:70]}...")
-                    time.sleep(random.uniform(2, 4))  # 더 길게
-                
-                break  # 성공하면 다음 페이지
-                
-            except Exception as e:
-                print(f"  오류 ({keyword} 페이지 {page}): {e}")
-                time.sleep(random.uniform(3, 6))
-        
-        page += 1
-        time.sleep(random.uniform(3, 6))
+    # sort=date : 최신순, sort=sim : 정확도순
+    url = f"https://openapi.naver.com/v1/search/news.json?query={enc_text}&display={max_articles}&start=1&sort=date"
     
-    return articles
-
-def get_article_content(naver_url):
     try:
-        resp = requests.get(naver_url, headers=get_headers(), timeout=12)
-        if resp.status_code != 200:
-            return f"본문 요청 실패 ({resp.status_code})"
+        resp = requests.get(url, headers=HEADERS, timeout=10)
         
-        soup = BeautifulSoup(resp.text, 'lxml')
-        
-        content = (soup.select_one("article.go_trans._article_content") or 
-                   soup.select_one("div#dic_area") or 
-                   soup.select_one("div.article_body"))
-        
-        if content:
-            for bad in content.select("script, style, iframe, .end_ad, .reporter_area, .byline"):
-                bad.decompose()
-            return content.get_text(strip=True, separator="\n")
-        
-        return "본문 선택자 실패"
-        
+        if resp.status_code == 200:
+            data = resp.json()
+            items = data.get("items", [])
+            
+            for item in items:
+                title = item['title'].replace('&quot;', '"').replace('&apos;', "'")
+                content = item.get('description', '').replace('&quot;', '"').replace('&apos;', "'")
+                
+                articles.append({
+                    "keyword": keyword,
+                    "title": title,
+                    "naver_link": item['link'],
+                    "original_link": item.get('originallink', ''),
+                    "content": content,
+                    "pub_date": item.get('pubDate', ''),
+                    "crawled_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                })
+                
+                print(f"✓ {keyword} | {title[:80]}...")
+            
+            print(f"   → {len(articles)}개 수집 완료")
+            return articles
+            
+        else:
+            print(f"   API 오류 ({resp.status_code}): {resp.text}")
+            return []
+            
     except Exception as e:
-        return f"본문 오류: {str(e)}"
+        print(f"   예외 발생: {e}")
+        return []
 
-# ==================== 실행 ====================
+
+# ==================== 메인 실행 ====================
 if __name__ == "__main__":
+    print("🚀 네이버 공식 API 뉴스 크롤러 시작\n")
+    
     keywords = ["AI", "테슬라", "애플"]
     all_articles = []
     
-    print("🚀 네이버 뉴스 크롤러 시작 (GitHub Actions용)\n")
-    
     for kw in keywords:
-        print(f"=== {kw} 뉴스 수집 시작 ===")
-        result = search_naver_news(kw, max_articles=5)
+        print(f"=== {kw} 뉴스 수집 중 ===")
+        result = search_naver_news_api(kw, max_articles=5)
         all_articles.extend(result)
-        time.sleep(random.uniform(5, 10))
+        time.sleep(0.5)  # API 호출 간격
     
+    # JSON 저장
     filename = "naver_news_ai_tesla_apple.json"
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(all_articles, f, ensure_ascii=False, indent=2)
     
-    print(f"\n✅ 완료! 총 {len(all_articles)}개 기사 → {filename}")
+    print(f"\n🎉 총 {len(all_articles)}개 기사 수집 완료 → {filename}")

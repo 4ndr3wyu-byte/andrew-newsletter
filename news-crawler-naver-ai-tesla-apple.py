@@ -2,66 +2,45 @@ import requests
 import re
 import time
 import os
-import urllib.parse
-from datetime import datetime
-from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
 
 # ==================== 설정 ====================
-CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
-CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
+NEWSAPI_KEY = os.getenv("NEWSAPI_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 def clean_text(text):
-    """텍스트 정리"""
     if not text:
         return ""
     text = re.sub(r'<[^>]+>', '', text)
-    text = re.sub(r'#\S+', '', text)
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
-def summarize_to_3lines(text):
-    """LLM 없이 간단 3줄 요약"""
-    if not text or len(text) < 30:
-        return text[:200] + "..." if text else "요약 실패"
+def summarize_3lines(text):
+    """간단하지만 자연스러운 3줄 요약"""
+    if not text:
+        return "요약을 가져올 수 없습니다."
     
-    # 문장 분리 후 앞 3문장 선택
-    sentences = re.split(r'[。.!?。！？]', text)
-    sentences = [s.strip() for s in sentences if len(s.strip()) > 15]
+    sentences = re.split(r'[.!?]', text)
+    sentences = [s.strip() for s in sentences if len(s.strip()) > 20]
     
-    summary_lines = sentences[:3]
-    return ".\n".join(summary_lines) + "." if summary_lines else text[:280] + "..."
+    summary = sentences[:3]
+    return ".\n".join(summary) + "." if summary else text[:300]
 
-def get_full_content(url):
-    """본문 가져오기"""
-    try:
-        resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
-        soup = BeautifulSoup(resp.text, 'lxml')
-        
-        content = (soup.select_one("article.go_trans._article_content") or 
-                   soup.select_one("div#dic_area") or 
-                   soup.select_one("div.article_view") or 
-                   soup.select_one("div.news_end"))
-        
-        if content:
-            return clean_text(content.get_text())
-        return ""
-    except:
-        return ""
-
-def send_to_telegram(news, index):
-    """기사 하나씩 전송"""
+def send_news(news, index):
     date_str = datetime.now().strftime("%Y년 %m월 %d일")
     
-    message = f"📨 **Andrew Daily Newsletter**\n"
-    message += f"**{date_str}** | AI • 테슬라 • 애플\n\n"
-    message += f"**{index}. {news['title']}**\n\n"
-    message += f"🔑 {news['keyword']}\n\n"
+    # Google Translate 링크 생성
+    translate_link = f"https://translate.google.com/translate?sl=en&tl=ko&u={news['url']}"
     
-    summary = summarize_to_3lines(news.get('content') or news.get('description', ''))
+    message = f"📨 **Andrew Daily Newsletter**\n"
+    message += f"**{date_str}** — 글로벌 테크 브리핑\n\n"
+    message += f"**{index}. {news['title']}**\n\n"
+    message += f"🔑 {news['source']['name']}\n\n"
+    
+    summary = summarize_3lines(news.get('description') or news.get('content', ''))
     message += f"{summary}\n\n"
-    message += f"🔗 [원문 읽기]({news['link']})"
+    message += f"🔗 [한국어로 번역해서 읽기]({translate_link})"
     
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {
@@ -75,53 +54,57 @@ def send_to_telegram(news, index):
     if response.status_code == 200:
         print(f"   ✅ {index}번 전송 완료")
     else:
-        print(f"   ❌ {index}번 전송 실패: {response.text}")
+        print(f"   ❌ {index}번 전송 실패")
 
 
 # ==================== 메인 ====================
 if __name__ == "__main__":
-    print("🚀 Andrew Daily Newsletter 크롤러 시작\n")
+    print("🚀 Andrew Global Tech Newsletter 크롤러 시작\n")
     
-    keywords = ["AI", "테슬라", "애플"]
+    # 지난 24시간
+    from_date = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d")
+    
+    keywords = ["AI OR Tesla OR Apple OR iPhone OR Mac OR Artificial Intelligence"]
+    
     all_news = []
     
-    for kw in keywords:
-        print(f"=== {kw} 뉴스 수집 중 ===")
-        enc_query = urllib.parse.quote(kw)
-        api_url = f"https://openapi.naver.com/v1/search/news.json?query={enc_query}&display=5&sort=date"
+    for keyword in keywords:
+        print(f"🔍 {keyword} 검색 중...")
+        
+        url = "https://newsapi.org/v2/everything"
+        params = {
+            "q": keyword,
+            "language": "en",
+            "sortBy": "popularity",      # 인기순
+            "from": from_date,
+            "pageSize": 15,
+            "apiKey": NEWSAPI_KEY
+        }
         
         try:
-            resp = requests.get(api_url, headers={
-                "X-Naver-Client-Id": CLIENT_ID,
-                "X-Naver-Client-Secret": CLIENT_SECRET
-            }, timeout=10)
+            resp = requests.get(url, params=params, timeout=15)
+            data = resp.json()
             
-            for item in resp.json().get("items", []):
-                title = clean_text(item.get('title', ''))
-                description = clean_text(item.get('description', ''))
-                link = item.get('link', '')
-                
-                full_content = get_full_content(link)
-                
-                news_item = {
-                    "keyword": kw,
-                    "title": title,
-                    "description": description,
-                    "content": full_content,
-                    "link": link
-                }
-                
-                all_news.append(news_item)
-                print(f"✓ {kw} | {title[:65]}...")
-                time.sleep(1.5)
-                
+            if data.get("status") != "ok":
+                print(f"   API 오류: {data.get('message')}")
+                continue
+            
+            for article in data.get("articles", []):
+                # 중복 제거
+                if not any(a['url'] == article['url'] for a in all_news):
+                    all_news.append(article)
+                    print(f"✓ {article['source']['name']} | {article['title'][:70]}...")
+                    
         except Exception as e:
             print(f"   오류: {e}")
     
-    # Telegram 전송
-    print("\n📤 Telegram 전송 시작...")
-    for i, news in enumerate(all_news, 1):
-        send_to_telegram(news, i)
-        time.sleep(1.2)
+    # 상위 12개만 사용 (너무 많지 않게)
+    all_news = all_news[:12]
     
-    print(f"\n🎉 총 {len(all_news)}개 기사 처리 완료!")
+    print(f"\n📤 Telegram 전송 시작... (총 {len(all_news)}개)")
+    
+    for i, news in enumerate(all_news, 1):
+        send_news(news, i)
+        time.sleep(1.3)
+    
+    print(f"\n🎉 완료! 총 {len(all_news)}개 글로벌 주요 기사 전송")

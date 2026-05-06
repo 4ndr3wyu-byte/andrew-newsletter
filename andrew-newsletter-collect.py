@@ -6,7 +6,8 @@ import requests
 import feedparser
 from datetime import datetime
 
-GEMINI_KEY = os.environ['NEWSLETTER_GEMINI_KEY']
+NEWSLETTER_GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }}
+
 
 SOURCES = {
     'Reuters':         'https://feeds.reuters.com/reuters/topNews',

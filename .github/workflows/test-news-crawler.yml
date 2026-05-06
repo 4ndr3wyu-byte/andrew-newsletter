@@ -1,4 +1,4 @@
-name: Daily Andrew Newsletter
+name: Daily Andrew Global Newsletter
 
 on:
   schedule:
@@ -20,12 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests beautifulsoup4 lxml
+          pip install requests
 
-      - name: Run Crawler & Send Newsletter
+      - name: Run Global Tech Newsletter
         env:
-          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
-          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python news-crawler-naver-ai-tesla-apple.py

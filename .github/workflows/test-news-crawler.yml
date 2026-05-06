@@ -1,0 +1,43 @@
+name: Test Naver News Crawler
+
+on:
+  push:
+    paths:
+      - 'news-crawler-naver-ai-tesla-apple.py'
+      - 'requirements.txt'
+  workflow_dispatch:   # 수동으로 실행 가능
+
+jobs:
+  test-crawler:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Naver News Crawler
+        run: |
+          python news-crawler-naver-ai-tesla-apple.py
+        env:
+          # 필요하면 나중에 API 키 등을 넣을 수 있음
+          PYTHONUNBUFFERED: 1
+
+      - name: Upload collected news as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collected-news
+          path: |
+            *.json
+            output/
+          retention-days: 7

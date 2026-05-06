@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'news-crawler-naver-ai-tesla-apple.py'
-      - 'requirements.txt'
   workflow_dispatch:
 
 jobs:
@@ -15,22 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install dependencies
-        run: pip install requests
 
       - name: Run Naver News Crawler
         env:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
         run: |
+          pip install requests
           python news-crawler-naver-ai-tesla-apple.py
-        shell: bash
 
       - name: Upload collected news
         if: always()

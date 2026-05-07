@@ -24,10 +24,6 @@ jobs:
 
           echo "Starting MNL news bot..."
 
-          
-
-          curl -L --fail --show-error --silent \
-
-            "${{ secrets.RENDER_BASE_URL }}/MNL-run-news"
+          curl -L --fail --show-error --silent "${{ secrets.RENDER_BASE_URL }}/MNL-run-news"
 
           echo "MNL news bot completed."

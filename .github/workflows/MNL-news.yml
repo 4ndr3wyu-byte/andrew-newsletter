@@ -18,32 +18,16 @@ jobs:
 
     steps:
 
-      - name: Checkout repository
+      - name: Call Render MNL News Bot
 
-        uses: actions/checkout@v4
+        run: |
 
-      - name: Setup Node.js
+          echo "Starting MNL news bot..."
 
-        uses: actions/setup-node@v4
+          
 
-        with:
+          curl -L --fail --show-error --silent \
 
-          node-version: "20"
+            "${{ secrets.RENDER_BASE_URL }}/run-news"
 
-      - name: Install dependencies
-
-        run: npm install
-
-      - name: Run MNL News Bot
-
-        env:
-
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
-          RENDER_BASE_URL: ${{ secrets.RENDER_BASE_URL }}
-
-        run: node MNL-news.js
+          echo "MNL news bot completed."

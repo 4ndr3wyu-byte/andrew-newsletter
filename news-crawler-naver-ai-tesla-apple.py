@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 
 # ==================== 설정 ====================
 NEWSAPI_KEY = os.getenv("NEWSAPI_KEY")
+DEEPL_API_KEY = os.getenv("DEEPL_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
@@ -17,21 +18,28 @@ def clean_text(text):
     return text
 
 def summarize_3lines(text):
-    """간단하지만 자연스러운 3줄 요약"""
+    """더 자연스러운 3줄 요약"""
     if not text:
-        return "요약을 가져올 수 없습니다."
+        return "요약 정보가 없습니다."
     
     sentences = re.split(r'[.!?]', text)
-    sentences = [s.strip() for s in sentences if len(s.strip()) > 20]
+    sentences = [s.strip() for s in sentences if len(s.strip()) > 25]
     
     summary = sentences[:3]
-    return ".\n".join(summary) + "." if summary else text[:300]
+    result = ".\n".join(summary)
+    return result + "." if result else text[:280]
+
+def get_deepl_translate_link(original_url):
+    """DeepL 번역 링크 생성"""
+    if not original_url:
+        return ""
+    # DeepL Translate URL
+    return f"https://www.deepl.com/translator#en/ko/{requests.utils.quote(original_url)}"
 
 def send_news(news, index):
     date_str = datetime.now().strftime("%Y년 %m월 %d일")
     
-    # Google Translate 링크 생성
-    translate_link = f"https://translate.google.com/translate?sl=en&tl=ko&u={news['url']}"
+    deepl_link = get_deepl_translate_link(news['url'])
     
     message = f"📨 **Andrew Daily Newsletter**\n"
     message += f"**{date_str}** — 글로벌 테크 브리핑\n\n"
@@ -40,7 +48,11 @@ def send_news(news, index):
     
     summary = summarize_3lines(news.get('description') or news.get('content', ''))
     message += f"{summary}\n\n"
-    message += f"🔗 [한국어로 번역해서 읽기]({translate_link})"
+    
+    if deepl_link:
+        message += f"🔗 [DeepL로 한국어 번역해서 읽기]({deepl_link})"
+    else:
+        message += f"🔗 [원문 읽기]({news['url']})"
     
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {
@@ -59,52 +71,37 @@ def send_news(news, index):
 
 # ==================== 메인 ====================
 if __name__ == "__main__":
-    print("🚀 Andrew Global Tech Newsletter 크롤러 시작\n")
+    print("🚀 Andrew Global Tech Newsletter (DeepL) 시작\n")
     
-    # 지난 24시간
     from_date = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d")
     
-    keywords = ["AI OR Tesla OR Apple OR iPhone OR Mac OR Artificial Intelligence"]
+    url = "https://newsapi.org/v2/everything"
+    params = {
+        "q": "AI OR Tesla OR Apple OR iPhone OR Mac OR Artificial Intelligence OR OpenAI",
+        "language": "en",
+        "sortBy": "popularity",
+        "from": from_date,
+        "pageSize": 15,
+        "apiKey": NEWSAPI_KEY
+    }
     
-    all_news = []
-    
-    for keyword in keywords:
-        print(f"🔍 {keyword} 검색 중...")
+    try:
+        resp = requests.get(url, params=params, timeout=15)
+        data = resp.json()
         
-        url = "https://newsapi.org/v2/everything"
-        params = {
-            "q": keyword,
-            "language": "en",
-            "sortBy": "popularity",      # 인기순
-            "from": from_date,
-            "pageSize": 15,
-            "apiKey": NEWSAPI_KEY
-        }
+        if data.get("status") != "ok":
+            print(f"API 오류: {data.get('message')}")
+            exit(1)
         
-        try:
-            resp = requests.get(url, params=params, timeout=15)
-            data = resp.json()
+        articles = data.get("articles", [])[:12]  # 최대 12개
+        
+        print(f"\n📤 Telegram 전송 시작... (총 {len(articles)}개)")
+        
+        for i, article in enumerate(articles, 1):
+            send_news(article, i)
+            time.sleep(1.3)
             
-            if data.get("status") != "ok":
-                print(f"   API 오류: {data.get('message')}")
-                continue
-            
-            for article in data.get("articles", []):
-                # 중복 제거
-                if not any(a['url'] == article['url'] for a in all_news):
-                    all_news.append(article)
-                    print(f"✓ {article['source']['name']} | {article['title'][:70]}...")
-                    
-        except Exception as e:
-            print(f"   오류: {e}")
+    except Exception as e:
+        print(f"오류 발생: {e}")
     
-    # 상위 12개만 사용 (너무 많지 않게)
-    all_news = all_news[:12]
-    
-    print(f"\n📤 Telegram 전송 시작... (총 {len(all_news)}개)")
-    
-    for i, news in enumerate(all_news, 1):
-        send_news(news, i)
-        time.sleep(1.3)
-    
-    print(f"\n🎉 완료! 총 {len(all_news)}개 글로벌 주요 기사 전송")
+    print(f"\n🎉 완료! DeepL 버전 뉴스레터 전송")

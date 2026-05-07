@@ -18,45 +18,15 @@ var TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 var SOURCES = [
 
-  {
+  { name: "The Verge", url: "https://www.theverge.com/rss/index.xml" },
 
-    name: "The Verge",
+  { name: "TechCrunch", url: "https://techcrunch.com/feed/" },
 
-    url: "https://www.theverge.com/rss/index.xml"
+  { name: "Ars Technica", url: "https://feeds.arstechnica.com/arstechnica/index" },
 
-  },
+  { name: "Electrek", url: "https://electrek.co/feed/" },
 
-  {
-
-    name: "TechCrunch",
-
-    url: "https://techcrunch.com/feed/"
-
-  },
-
-  {
-
-    name: "Ars Technica",
-
-    url: "https://feeds.arstechnica.com/arstechnica/index"
-
-  },
-
-  {
-
-    name: "Electrek",
-
-    url: "https://electrek.co/feed/"
-
-  },
-
-  {
-
-    name: "MacRumors",
-
-    url: "https://www.macrumors.com/macrumors.xml"
-
-  }
+  { name: "MacRumors", url: "https://www.macrumors.com/macrumors.xml" }
 
 ];
 
@@ -96,9 +66,7 @@ async function summarizeArticle(title) {
 
           content:
 
-            "너는 세계 최고의 IT 뉴스 에디터다. " +
-
-            "기사 제목을 보고 한국어 제목과 핵심 요약 3줄을 만들어라."
+            "너는 세계 최고의 IT 뉴스 에디터다. 기사 제목을 보고 한국어 제목과 핵심 요약 3줄을 만들어라."
 
         },
 
@@ -112,17 +80,7 @@ async function summarizeArticle(title) {
 
             title +
 
-            "\n\n" +
-
-            "출력 형식:\n" +
-
-            "제목:\n" +
-
-            "요약1:\n" +
-
-            "요약2:\n" +
-
-            "요약3:"
+            "\n\n출력 형식:\n제목:\n요약1:\n요약2:\n요약3:"
 
         }
 
@@ -140,7 +98,21 @@ async function summarizeArticle(title) {
 
     console.log(error.message);
 
-    return null;
+    return (
+
+      "제목:\n" +
+
+      title +
+
+      "\n" +
+
+      "요약1:\nAI 요약을 생성하지 못했습니다.\n" +
+
+      "요약2:\nOpenAI API quota 또는 billing 상태를 확인해야 합니다.\n" +
+
+      "요약3:\n원문 링크를 통해 기사를 확인할 수 있습니다."
+
+    );
 
   }
 
@@ -176,7 +148,7 @@ async function collectNews() {
 
     } catch (error) {
 
-      console.log("RSS ERROR");
+      console.log("RSS ERROR:", SOURCES[i].name);
 
       console.log(error.message);
 
@@ -208,35 +180,13 @@ async function runMNLNews() {
 
     for (var i = 0; i < articles.length; i++) {
 
-      var summary = await summarizeArticle(
+      var summary = await summarizeArticle(articles[i].title);
 
-        articles[i].title
-
-      );
-
-      if (!summary) {
-
-        continue;
-
-      }
-
-      message +=
-
-        "🌐 [" +
-
-        articles[i].source +
-
-        "]\n\n";
+      message += "🌐 [" + articles[i].source + "]\n\n";
 
       message += summary + "\n\n";
 
-      message +=
-
-        "원문:\n" +
-
-        articles[i].link +
-
-        "\n\n";
+      message += "원문:\n" + articles[i].link + "\n\n";
 
       message += "━━━━━━━━━━━━━━━━━━\n\n";
 

@@ -4,6 +4,8 @@ var app = express();
 
 var PORT = process.env.PORT || 10000;
 
+var runMNLNews = require("./MNL-news");
+
 app.use(express.json());
 
 app.get("/", function(req, res) {
@@ -14,31 +16,15 @@ app.get("/", function(req, res) {
 
 app.get("/MNL-run-news", async function(req, res) {
 
-  try {
+  res.json({
 
-    console.log("MNL news endpoint called");
+    ok: true,
 
-    res.json({
+    message: "MNL news started"
 
-      ok: true,
+  });
 
-      message: "MNL news endpoint works"
-
-    });
-
-  } catch (error) {
-
-    console.error("MNL news error:", error);
-
-    res.status(500).json({
-
-      ok: false,
-
-      error: error.message
-
-    });
-
-  }
+  runMNLNews();
 
 });
 

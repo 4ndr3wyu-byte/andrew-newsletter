@@ -28,6 +28,6 @@ jobs:
 
           curl -L --fail --show-error --silent \
 
-            "${{ secrets.RENDER_BASE_URL }}/run-news"
+            "${{ secrets.RENDER_BASE_URL }}/MNL-run-news"
 
           echo "MNL news bot completed."

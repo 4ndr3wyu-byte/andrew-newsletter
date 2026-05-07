@@ -1,6 +1,6 @@
 app.get("/", function(req, res) {
 
-  res.send("Andrew schedule bot is running.");
+  res.send("Andrew schedule bot is running. MNL endpoint added.");
 
 });
 

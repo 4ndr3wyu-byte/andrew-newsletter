@@ -1,0 +1,21 @@
+{
+
+  "name": "mnl-news-bot",
+
+  "version": "1.0.0",
+
+  "main": "MNL-server.js",
+
+  "scripts": {
+
+    "start": "node MNL-server.js"
+
+  },
+
+  "dependencies": {
+
+    "express": "^4.18.2"
+
+  }
+
+}

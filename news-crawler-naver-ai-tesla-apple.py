@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 
 # ==================== 설정 ====================
 NEWSAPI_KEY = os.getenv("NEWSAPI_KEY")
-DEEPL_API_KEY = os.getenv("DEEPL_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
@@ -18,28 +17,24 @@ def clean_text(text):
     return text
 
 def summarize_3lines(text):
-    """더 자연스러운 3줄 요약"""
     if not text:
         return "요약 정보가 없습니다."
-    
     sentences = re.split(r'[.!?]', text)
     sentences = [s.strip() for s in sentences if len(s.strip()) > 25]
-    
     summary = sentences[:3]
-    result = ".\n".join(summary)
-    return result + "." if result else text[:280]
+    return ".\n".join(summary) + "." if summary else text[:280]
 
-def get_deepl_translate_link(original_url):
-    """DeepL 번역 링크 생성"""
-    if not original_url:
-        return ""
-    # DeepL Translate URL
-    return f"https://www.deepl.com/translator#en/ko/{requests.utils.quote(original_url)}"
+def get_translate_link(url):
+    """Google Translate + DeepL fallback"""
+    if not url:
+        return url
+    # Google Translate (가장 안정적)
+    google_link = f"https://translate.google.com/translate?sl=en&tl=ko&u={requests.utils.quote(url)}"
+    return google_link
 
 def send_news(news, index):
     date_str = datetime.now().strftime("%Y년 %m월 %d일")
-    
-    deepl_link = get_deepl_translate_link(news['url'])
+    translate_link = get_translate_link(news['url'])
     
     message = f"📨 **Andrew Daily Newsletter**\n"
     message += f"**{date_str}** — 글로벌 테크 브리핑\n\n"
@@ -48,11 +43,7 @@ def send_news(news, index):
     
     summary = summarize_3lines(news.get('description') or news.get('content', ''))
     message += f"{summary}\n\n"
-    
-    if deepl_link:
-        message += f"🔗 [DeepL로 한국어 번역해서 읽기]({deepl_link})"
-    else:
-        message += f"🔗 [원문 읽기]({news['url']})"
+    message += f"🔗 [한국어로 번역해서 읽기]({translate_link})"
     
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {
@@ -71,17 +62,17 @@ def send_news(news, index):
 
 # ==================== 메인 ====================
 if __name__ == "__main__":
-    print("🚀 Andrew Global Tech Newsletter (DeepL) 시작\n")
+    print("🚀 Andrew Global Tech Newsletter 시작\n")
     
     from_date = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d")
     
     url = "https://newsapi.org/v2/everything"
     params = {
-        "q": "AI OR Tesla OR Apple OR iPhone OR Mac OR Artificial Intelligence OR OpenAI",
+        "q": "AI OR Tesla OR Apple OR iPhone OR Mac OR OpenAI OR Artificial Intelligence",
         "language": "en",
         "sortBy": "popularity",
         "from": from_date,
-        "pageSize": 15,
+        "pageSize": 12,
         "apiKey": NEWSAPI_KEY
     }
     
@@ -93,7 +84,7 @@ if __name__ == "__main__":
             print(f"API 오류: {data.get('message')}")
             exit(1)
         
-        articles = data.get("articles", [])[:12]  # 최대 12개
+        articles = data.get("articles", [])[:12]
         
         print(f"\n📤 Telegram 전송 시작... (총 {len(articles)}개)")
         
@@ -104,4 +95,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"오류 발생: {e}")
     
-    print(f"\n🎉 완료! DeepL 버전 뉴스레터 전송")
+    print(f"\n🎉 완료!")

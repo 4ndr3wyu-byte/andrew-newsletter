@@ -1,8 +1,24 @@
+app.get("/", function(req, res) {
+
+  res.send("Andrew schedule bot is running.");
+
+});
+
+/* ━━━━━━━━━━━━━━━━━━━━
+
+   MNL NEWS BOT
+
+━━━━━━━━━━━━━━━━━━━━ */
+
 app.get("/MNL-run-news", async function(req, res) {
 
   try {
 
+    console.log("━━━━━━━━━━━━━━━━━━━━");
+
     console.log("MNL news bot started");
+
+    console.log("━━━━━━━━━━━━━━━━━━━━");
 
     res.json({
 
@@ -14,7 +30,13 @@ app.get("/MNL-run-news", async function(req, res) {
 
   } catch (error) {
 
-    console.error("MNL news error:", error);
+    console.error("━━━━━━━━━━━━━━━━━━━━");
+
+    console.error("MNL news error");
+
+    console.error(error);
+
+    console.error("━━━━━━━━━━━━━━━━━━━━");
 
     res.status(500).json({
 

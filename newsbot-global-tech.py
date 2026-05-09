@@ -113,7 +113,7 @@ if __name__ == "__main__":
             print(f"NewsAPI 오류: {data.get('message')}")
             exit(1)
         
-        articles = data.get("articles", [])[:12]
+        articles = data.get("articles", [])[:24]
         
         print(f"\n📤 Telegram 전송 시작... (총 {len(articles)}개)")
         

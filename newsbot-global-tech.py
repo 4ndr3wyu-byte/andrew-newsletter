@@ -18,50 +18,48 @@ def clean_text(text):
     return text
 
 def groq_summary(text):
-    """Groq LLM을 사용한 자연스러운 3줄 요약 (안정화 버전)"""
+    """Groq LLM 고품질 3줄 요약"""
     if not text or len(text) < 30:
         return clean_text(text)[:250]
     
-    # 프롬프트 간소화 + 길이 제한
-    short_text = text[:1200]
+    short_text = text[:1300]
     
-    prompt = f"""다음 뉴스 기사를 한국어로 자연스럽고 쉽게 **정확히 3줄**로 요약해줘.
+    prompt = f"""아래 뉴스 기사를 한국어로 **자연스럽고 읽기 쉽게 정확히 3줄**로 요약해줘.
+기술 용어는 적절히 유지하고, 핵심만 전달해.
 
 기사: {short_text}"""
 
     try:
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {GROQ_API_KEY}",
-                "Content-Type": "application/json"
-            },
+            headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
             json={
-                "model": "llama3-70b-8192",
+                "model": "llama-3.3-70b-versatile",   # 최신 안정 모델
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.6,
-                "max_tokens": 300
+                "max_tokens": 320
             },
-            timeout=12
+            timeout=15
         )
         
         if response.status_code == 200:
             result = response.json()
             summary = result['choices'][0]['message']['content'].strip()
-            # 3줄 넘지 않도록 정리
             lines = [line.strip() for line in summary.split('\n') if line.strip()]
             return '\n'.join(lines[:3])
         else:
-            print(f"Groq API 오류: {response.status_code} - {response.text[:100]}")
+            print(f"Groq API 오류: {response.status_code}")
             return clean_text(text)[:280]
     except Exception as e:
-        print(f"Groq 요약 예외: {e}")
+        print(f"Groq 오류: {e}")
         return clean_text(text)[:280]
 
 def get_translate_link(url):
+    """Yes/No 확인창 최소화"""
     if not url:
         return ""
-    return f"https://translate.google.com/translate?sl=en&tl=ko&u={requests.utils.quote(url)}"
+    # Google Translate 직접 번역 링크 (더 직관적으로)
+    return f"https://translate.google.com/translate?sl=en&tl=ko&js=y&u={requests.utils.quote(url)}&prev=_t&hl=ko"
 
 def send_news(news, index):
     date_str = datetime.now().strftime("%Y년 %m월 %d일")
@@ -74,7 +72,7 @@ def send_news(news, index):
     
     summary = groq_summary(news.get('description') or news.get('content', ''))
     message += f"{summary}\n\n"
-    message += f"🔗 [Google Translate로 한국어로 읽기]({translate_link})"
+    message += f"🔗 [한국어로 번역해서 읽기]({translate_link})"
     
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {
@@ -121,7 +119,7 @@ if __name__ == "__main__":
         
         for i, article in enumerate(articles, 1):
             send_news(article, i)
-            time.sleep(1.8)   # Groq 호출 간격 조정
+            time.sleep(1.8)
             
     except Exception as e:
         print(f"오류 발생: {e}")

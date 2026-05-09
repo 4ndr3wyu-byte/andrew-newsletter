@@ -18,15 +18,15 @@ def clean_text(text):
     return text
 
 def groq_summary(text):
-    """Groq LLM을 사용한 자연스러운 3줄 요약"""
+    """Groq LLM을 사용한 고품질 3줄 요약"""
     if not text or len(text) < 50:
         return clean_text(text)[:280]
     
     prompt = f"""
-아래 뉴스 기사를 한국어로 자연스럽고 읽기 쉽게 **정확히 3줄**로 요약해줘.
-기술적 용어는 적절히 유지하고, 불필요한 수식어는 빼줘.
+아래 영어 뉴스 기사를 한국어로 **자연스럽고, 읽기 쉽게 정확히 3줄**로 요약해줘.
+기술 용어는 적절히 유지하고, 불필요한 표현은 빼줘. 핵심만 전달해.
 
-기사: {text[:1500]}
+기사 내용: {text[:1800]}
 """
 
     try:
@@ -34,12 +34,12 @@ def groq_summary(text):
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
             json={
-                "model": "llama3-70b-8192",        # 빠르고 품질 좋은 모델
+                "model": "llama3-70b-8192",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.7,
-                "max_tokens": 300
+                "max_tokens": 350
             },
-            timeout=15
+            timeout=20
         )
         
         if response.status_code == 200:
@@ -49,7 +49,8 @@ def groq_summary(text):
         else:
             print(f"Groq API 오류: {response.status_code}")
             return clean_text(text)[:280]
-    except:
+    except Exception as e:
+        print(f"Groq 요약 오류: {e}")
         return clean_text(text)[:280]
 
 def get_translate_link(url):
@@ -66,7 +67,6 @@ def send_news(news, index):
     message += f"**{index}. {news['title']}**\n\n"
     message += f"🔑 {news['source']['name']}\n\n"
     
-    # Groq으로 고품질 요약
     summary = groq_summary(news.get('description') or news.get('content', ''))
     message += f"{summary}\n\n"
     message += f"🔗 [Google Translate로 한국어로 읽기]({translate_link})"
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     
     url = "https://newsapi.org/v2/everything"
     params = {
-        "q": "AI OR Tesla OR Apple OR OpenAI OR iPhone OR Mac",
+        "q": "AI OR Tesla OR Apple OR OpenAI OR iPhone OR Mac OR Artificial Intelligence",
         "language": "en",
         "sortBy": "popularity",
         "from": from_date,
@@ -116,9 +116,9 @@ if __name__ == "__main__":
         
         for i, article in enumerate(articles, 1):
             send_news(article, i)
-            time.sleep(2.0)  # Groq 호출 간격
+            time.sleep(2.0)   # Groq 호출 간격
             
     except Exception as e:
         print(f"오류 발생: {e}")
     
-    print(f"\n🎉 Groq LLM 버전 완료!")
+    print(f"\n🎉 Groq LLM 버전 뉴스레터 전송 완료!")

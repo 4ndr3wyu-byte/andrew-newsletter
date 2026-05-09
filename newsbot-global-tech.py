@@ -18,39 +18,44 @@ def clean_text(text):
     return text
 
 def groq_summary(text):
-    """Groq LLM을 사용한 고품질 3줄 요약"""
-    if not text or len(text) < 50:
-        return clean_text(text)[:280]
+    """Groq LLM을 사용한 자연스러운 3줄 요약 (안정화 버전)"""
+    if not text or len(text) < 30:
+        return clean_text(text)[:250]
     
-    prompt = f"""
-아래 영어 뉴스 기사를 한국어로 **자연스럽고, 읽기 쉽게 정확히 3줄**로 요약해줘.
-기술 용어는 적절히 유지하고, 불필요한 표현은 빼줘. 핵심만 전달해.
+    # 프롬프트 간소화 + 길이 제한
+    short_text = text[:1200]
+    
+    prompt = f"""다음 뉴스 기사를 한국어로 자연스럽고 쉽게 **정확히 3줄**로 요약해줘.
 
-기사 내용: {text[:1800]}
-"""
+기사: {short_text}"""
 
     try:
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
+            headers={
+                "Authorization": f"Bearer {GROQ_API_KEY}",
+                "Content-Type": "application/json"
+            },
             json={
                 "model": "llama3-70b-8192",
                 "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.7,
-                "max_tokens": 350
+                "temperature": 0.6,
+                "max_tokens": 300
             },
-            timeout=20
+            timeout=12
         )
         
         if response.status_code == 200:
             result = response.json()
             summary = result['choices'][0]['message']['content'].strip()
-            return summary
+            # 3줄 넘지 않도록 정리
+            lines = [line.strip() for line in summary.split('\n') if line.strip()]
+            return '\n'.join(lines[:3])
         else:
-            print(f"Groq API 오류: {response.status_code}")
+            print(f"Groq API 오류: {response.status_code} - {response.text[:100]}")
             return clean_text(text)[:280]
     except Exception as e:
-        print(f"Groq 요약 오류: {e}")
+        print(f"Groq 요약 예외: {e}")
         return clean_text(text)[:280]
 
 def get_translate_link(url):
@@ -94,7 +99,7 @@ if __name__ == "__main__":
     
     url = "https://newsapi.org/v2/everything"
     params = {
-        "q": "AI OR Tesla OR Apple OR OpenAI OR iPhone OR Mac OR Artificial Intelligence",
+        "q": "AI OR Tesla OR Apple OR OpenAI OR iPhone OR Mac",
         "language": "en",
         "sortBy": "popularity",
         "from": from_date,
@@ -116,9 +121,9 @@ if __name__ == "__main__":
         
         for i, article in enumerate(articles, 1):
             send_news(article, i)
-            time.sleep(2.0)   # Groq 호출 간격
+            time.sleep(1.8)   # Groq 호출 간격 조정
             
     except Exception as e:
         print(f"오류 발생: {e}")
     
-    print(f"\n🎉 Groq LLM 버전 뉴스레터 전송 완료!")
+    print(f"\n🎉 Groq LLM 버전 완료!")
